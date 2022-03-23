@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.Iterator;
 
-public class ArrayList1 implements List1 {
+public class ArrayList1 implements List1, Iterable<String> {
 
     private String[] array;
     private int listSize = 0;
@@ -87,17 +87,33 @@ public class ArrayList1 implements List1 {
     public Iterator<String> iterator() {
         Iterator<String> iterator = new Iterator<String>() {
             private int current = 0;
+            private int currentHas = 0;
             @Override
             public boolean hasNext() {
-                if (array[current] != null) {
+                if (array[currentHas] != null) {
+                    currentHas++;
                     return true;
                 }
+                currentHas = 0;
+                current = 0;
                 return false;
             }
 
             @Override
             public String next() {
                 return array[current++];
+            }
+
+            @Override
+            public void remove() {
+                for (int i = currentHas - 1; i < listSize; i++) {
+                    if (array[currentHas] != null) {
+                        array[currentHas - 1] = array[currentHas];
+                        currentHas++;
+                    } else {
+                        array[currentHas - 1] = null;
+                    }
+                }
             }
         };
         return iterator;

@@ -18,8 +18,8 @@ public class Main {
                 itr.remove();
             }
         }
-        while (itr.hasNext()) {
-            System.out.println(itr.next());
+        for (String value: ex){
+            System.out.println(value);
         }
     }
 }
